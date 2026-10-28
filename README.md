@@ -8,7 +8,7 @@ Meet Hub is a meeting-focused application. The project is currently being set up
 - `Frontend/` - frontend application
 
 **User Roles**
-A. Attendee
+**A. Attendee**
 An attendee can:
 1. Register and log in.
 2. Browse available events.
@@ -18,8 +18,7 @@ An attendee can:
 6. Chat with the FAQ chatbot.
 7. Communicate with other attendees, if attendee-to-attendee chat is implemented.
 
-
-B. Organizer
+**B. Organizer**
 An organizer can:
 1. Log in to the application.
 2. Create new events.
@@ -40,3 +39,19 @@ User → Register / Login Page → React Frontend → Send Credentials to Backen
 ## 2. Event Management Flow
 
 Organizer → Event Management Page → Enter Event Details → Submit Event Form → React Frontend → POST Request (REST API) → Express Backend → Authenticate User → Check Organizer Permissions → Validate Event Information → Mongoose Model → Save Event in MongoDB → Return Response to Frontend → Display Created Event
+
+## 3. Event Registration Flow
+
+Attendee → Browse Events Page → Select an Event → View Event Details → Click Register → React Frontend → Send Registration Request (REST API) → Express Backend → Authenticate Attendee → Validate Event → Check Event Availability → Check for Duplicate Registration → Create Registration Record → Mongoose Model → Save Registration in MongoDB → Return Registration Confirmation → Display Confirmation to Attendee
+
+## 4. Ticketing Flow
+
+Successful Registration → Generate Unique Ticket ID → Associate Ticket with Attendee, Event, and Registration → Save Ticket Information in MongoDB → Return Ticket Details to Frontend → Display Ticket to Attendee → Attendee Views or Retrieves Ticket
+
+## 5. Real-Time Chatbot Flow
+
+Attendee → Open Chat UI → React Frontend → Socket.IO Client → Socket.IO Server (Node.js) → Receive Message → Match Message Against Predefined FAQs → Generate Scripted Response → Emit Response Through Socket.IO → React Frontend → Display Chatbot Reply
+
+## 6. Analytics Dashboard Flow
+
+Organizer → Open Dashboard → React Frontend → Send Analytics Request (REST API) → Express Backend → Authenticate Organizer → Verify Permissions → Query MongoDB Using Aggregation → Calculate Total Events and Registrations per Event → Return Analytics Data → React Dashboard → Display Charts, Tables, and Statistics
