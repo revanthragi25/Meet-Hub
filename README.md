@@ -29,130 +29,14 @@ An organizer can:
 6. Access the analytics dashboard.
 7. Monitor registration statistics.
 
-                    M E E T H U B
-                         |
-              +----------+----------+
-              |                     |
-          Attendee               Organizer
-              |                     |
-              +----------+----------+
-                         |
-                         v
-                 FRONTEND (React)
-                         |
-          +--------------+--------------+
-          |              |              |
-      Event Pages      Chat UI      Dashboard
-          |              |              |
-          +--------------+--------------+
-                         |
-               +---------+---------+
-               |                   |
-          REST APIs             Socket.IO
-               |                   |
-               v                   v
-        BACKEND (Node.js + Express)
-               |
-      +--------+---------+----------------+
-      |        |         |                |
-      v        v         v                v
- Authentication Events  Registration    Chatbot
-      |        |         & Tickets        |
-      |        |         |                |
-      +--------+---------+----------------+
-                         |
-                         v
-                DATABASE (MongoDB)
-                         |
-          +--------------+--------------+
-          |              |              |
-        Users          Events      Registrations
-                                        |
-                                        v
-                                     Tickets
+  # M E E T H U B
 
+User (Attendee / Organizer) → React Frontend → Event Pages / Chat UI / Dashboard → REST APIs / Socket.IO → Node.js + Express.js Backend → Authentication / Event Management / Registration & Ticketing / Chatbot / Analytics → Mongoose → MongoDB (Users / Events / Registrations / Tickets)
 
-   **AUTHENTICATION FLOW**
-   User
-  |
-  v
-Register / Login Page
-  |
-  v
-React Frontend
-  |
-  v
-Send Credentials to Backend
-  |
-  v
-Express API
-  |
-  v
-Validate Credentials
-  |
-  +---- Registration ----> Hash Password
-  |                            |
-  |                            v
-  |                      Save User in MongoDB
-  |
-  +---- Login -----------> Verify Password
-                               |
-                               v
-                       Generate JWT / Session
-                               |
-                               v
-                       Return Authentication
-                               |
-                               v
-                       Access Protected Pages
-                               |
-                               v
-                       Check User Permissions
-                               |
-                   +-----------+-----------+
-                   |                       |
-                Attendee                Organizer
-                   |                       |
-                   v                       v
-              User Features          Organizer Features
+## 1. Authentication Flow
 
+User → Register / Login Page → React Frontend → Send Credentials to Backend → Express API → Validate Credentials → Hash Password (Registration) / Verify Password (Login) → Save or Retrieve User from MongoDB → Generate JWT / Session → Return Authentication Response → Check User Permissions → Attendee / Organizer → Access Authorized Features
 
+## 2. Event Management Flow
 
-  ** Event Management Flow**
-  Organizer
-    |
-    v
-Open Event Management Page
-    |
-    v
-Enter Event Details
-    |
-    v
-Submit Event Form
-    |
-    v
-React Sends POST Request
-    |
-    v
-Express Backend
-    |
-    v
-Authenticate User
-    |
-    v
-Check Organizer Permissions
-    |
-    v
-Validate Event Information
-    |
-    v
-Mongoose Model
-    |
-    v
-Save Event in MongoDB
-    |
-    v
-Return Response to Frontend
-    |
-    v
-Display Created Event
+Organizer → Event Management Page → Enter Event Details → Submit Event Form → React Frontend → POST Request (REST API) → Express Backend → Authenticate User → Check Organizer Permissions → Validate Event Information → Mongoose Model → Save Event in MongoDB → Return Response to Frontend → Display Created Event
