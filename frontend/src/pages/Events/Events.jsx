@@ -1,11 +1,11 @@
 import React from 'react'
 
-const App = () => {
+const Events = () => {
   return (
     <div>
-      <h1>Hiii team</h1>
+      
     </div>
   )
 }
 
-export default App
+export default Events
