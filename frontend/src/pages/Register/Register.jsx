@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./register.css";
-
+import { Link, useNavigate } from "react-router-dom";
+import Leftcomp from "../../components/Leftcomp/Leftcomp";
 
 function Register() {
 const [userdetails,setUserdetails] =useState({
@@ -62,96 +63,109 @@ function validateField(name,value){
 }
 
   return (
-    <div className="register-page">
-      <div className="register-card">
-        <h1 className="register-logo">
-          Meet<span>Hub</span>
-        </h1>
+<div className="register-page">
+<Leftcomp />
 
-        <h2>Create an Account</h2>
-        <p className="register-subtitle">
-          Join MeetHub and discover amazing events.
-        </p>
+  <section className="register-right">
+    <div className="register-card">
+      <h1 className="register-logo">
+        Meet<span>Hub</span>
+      </h1>
 
-        <form className="register-form" onSubmit={handleSubmit}>
+      <h2>Create an Account</h2>
 
-          <div className="form-group">
-            <label htmlFor="name">Full Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={userdetails.name}
-              placeholder="Enter your full name"
-              onChange={handleInput}
-              onBlur={(e)=>{validateField(e.target.name,e.target.value)}}
-              required
-            />{errors.name && (
-    <p className="error-message">{errors.name}</p>
-  )}
-          </div>
+      <p className="register-subtitle">
+        Join MeetHub and discover amazing events.
+      </p>
 
-          <div className="form-group">
-            <label htmlFor="email">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={userdetails.email}
-              placeholder="Enter your email address"
-              onChange={handleInput}
-              onBlur={(e)=>{validateField(e.target.name,e.target.value)}}
-              required
-            />{errors.email && (
-    <p className="error-message">{errors.email}</p>
-  )}
-          </div>
+      <form className="register-form" onSubmit={handleSubmit} noValidate>
+        <div className="form-group">
+          <label htmlFor="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={userdetails.name}
+            placeholder="Enter your full name"
+            onChange={handleInput}
+            onBlur={(e) =>
+              validateField(e.target.name, e.target.value)
+            }
+          />
+          {errors.name && (
+            <p className="error-message">{errors.name}</p>
+          )}
+        </div>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={userdetails.password}
-              placeholder="Create a password"
-              onChange={handleInput}
-              onBlur={(e)=>{validateField(e.target.name,e.target.value)}}
-              required
-            />{errors.password && (
-    <p className="error-message">{errors.password}</p>
-  )}
-          </div>
+        <div className="form-group">
+          <label htmlFor="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={userdetails.email}
+            placeholder="Enter your email address"
+            onChange={handleInput}
+            onBlur={(e) =>
+              validateField(e.target.name, e.target.value)
+            }
+          />
+          {errors.email && (
+            <p className="error-message">{errors.email}</p>
+          )}
+        </div>
 
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={userdetails.confirmPassword}
-              placeholder="Re-enter your password"
-              onChange={handleInput}
-              onBlur={(e)=>{validateField(e.target.name,e.target.value)}}
-              required
-            />{errors.confirmPassword && (
-    <p className="error-message">{errors.confirmPassword}</p>
-  )}
-          </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={userdetails.password}
+            placeholder="Create a password"
+            onChange={handleInput}
+            onBlur={(e) =>
+              validateField(e.target.name, e.target.value)
+            }
+          />
+          {errors.password && (
+            <p className="error-message">{errors.password}</p>
+          )}
+        </div>
 
-          <button type="submit" className="register-button" >
-            Create Account
-          </button>
+        <div className="form-group">
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={userdetails.confirmPassword}
+            placeholder="Re-enter your password"
+            onChange={handleInput}
+            onBlur={(e) =>
+              validateField(e.target.name, e.target.value)
+            }
+          />
+          {errors.confirmPassword && (
+            <p className="error-message">
+              {errors.confirmPassword}
+            </p>
+          )}
+        </div>
 
-        </form>
+        <button type="submit" className="register-button">
+          Create Account <span>→</span>
+        </button>
+      </form>
 
-        <p className="login-link">
-          Already have an account? <a href="/login">Sign in</a>
-        </p>
-
-      </div>
+      <p className="login-link">
+        Already have an account? <Link to="/login">Sign in</Link>
+      </p>
     </div>
-  );
+  </section>
+</div>
+
+);
 }
 
 export default Register;
