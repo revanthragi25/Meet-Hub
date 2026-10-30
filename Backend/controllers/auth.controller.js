@@ -2,7 +2,7 @@ const authService = require("../services/auth.service");
 
 const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password } = req.body || {};
 
     if (!name || !email || !password) {
       return res.status(400).json({
@@ -10,15 +10,11 @@ const register = async (req, res) => {
       });
     }
 
-    const user = await authService.register(
-      name,
-      email,
-      password
-    );
+    console.info("Registration request received:", { name, email });
 
     res.status(201).json({
-      message: "Registration successful",
-      user,
+      message: "Registration received (not saved)",
+      user: { name, email },
     });
   } catch (error) {
     res.status(400).json({
@@ -27,9 +23,10 @@ const register = async (req, res) => {
   }
 };
 
+
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body || {};
 
     if (!email || !password) {
       return res.status(400).json({
