@@ -8,12 +8,14 @@ dotenv.config({ path: path.join(__dirname, ".env.local") });
 dotenv.config({ path: path.join(__dirname, ".env") });
 
 const authRoutes = require("./routes/auth.routes");
+const eventRoutes = require("./routes/event.routes");
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
+app.use("/api/events", eventRoutes);
 
 const PORT = process.env.PORT || 3000;
 
