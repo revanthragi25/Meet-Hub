@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Login from './pages/Login/Login'
 import Register from './pages/Register/Register'
 import Events from './pages/Events/Events'
+import Messaging from './pages/Messaging/Messaging'
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Route path='/login' element={<Login/>} />
       <Route path='/register' element={<Register/>} />
       <Route path='/events' element={<Events/>} />
+      <Route path='/messaging' element={<Messaging/>} />
     </Routes>
     </BrowserRouter>
   )

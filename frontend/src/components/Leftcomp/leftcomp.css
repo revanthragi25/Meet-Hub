@@ -1,0 +1,126 @@
+/* LEFT VISUAL SECTION */
+
+.login-visual {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 20% 20%, #5141a8 0%, transparent 45%),
+    radial-gradient(ellipse at 90% 80%, #b85e8c 0%, transparent 45%),
+    linear-gradient(145deg, #17132f, #292052 55%, #563b78);
+  color: white;
+}
+
+.visual-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.6) 0.7px,
+    transparent 0.7px
+  );
+  background-size: 22px 22px;
+}
+
+.visual-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  padding: 48px 9%;
+}
+
+.brand,
+.mobile-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "Manrope", sans-serif;
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.brand {
+  color: white;
+  text-decoration: none;
+}
+
+.brand-icon {
+  display: grid;
+  place-items: center;
+  width: 43px;
+  height: 43px;
+  border-radius: 13px;
+  background: linear-gradient(135deg, #a78bfa, #e879b9);
+  color: white;
+  font-size: 23px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.visual-text {
+  max-width: 550px;
+  margin: 70px 0;
+}
+
+.eyebrow,
+.welcome-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.eyebrow {
+  color: #d7c6ff;
+}
+
+.visual-text h1 {
+  margin: 24px 0 20px;
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(35px, 4vw, 55px);
+  line-height: 1.2;
+  letter-spacing: -2px;
+}
+
+.visual-text h1 span {
+  color: #d6b8ff;
+}
+
+.visual-text > p {
+  max-width: 430px;
+  color: #d8d3eb;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.visual-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 45px;
+}
+
+.visual-stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.visual-stats strong {
+  font-family: "Manrope", sans-serif;
+  font-size: 26px;
+}
+
+.visual-stats span {
+  color: #c6bedc;
+  font-size: 12px;
+}
+
+.visual-footer {
+  color: #d0c8e2;
+  font-size: 12px;
+}

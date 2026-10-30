@@ -1,5 +1,6 @@
 import React from "react";
 import "./Sidebar.css";
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {
   return (
@@ -9,13 +10,14 @@ function Sidebar() {
         <p className="menu-title">MENU</p>
 
         <nav>
-          <a className="active" href="#overview">▦ Overview</a>
-          <a href="#events">▣ Events</a>
-          <a href="#registrations">♙ Registrations</a>
-          <a href="#tickets">▤ Tickets</a>
-          <a href="#analytics">⌁ Analytics</a>
-          <a href="#settings">⚙ Settings</a>
-        </nav>
+  <NavLink to="/dashboard">▦ Dashboard</NavLink>
+  <NavLink to="/events">▣ Events</NavLink>
+  <NavLink to="/registrations">♙ Registrations</NavLink>
+  <NavLink to="/tickets">▤ Tickets</NavLink>
+  <NavLink to="/analytics">⌁ Analytics</NavLink>
+  <NavLink to="/messaging">⌁ Messages</NavLink>
+  <NavLink to="/settings">⚙ Settings</NavLink>
+</nav>
 
         <div className="sidebar-profile">
           <div className="avatar">VL</div>
