@@ -1,5 +1,5 @@
 # Meet Hub
-
+MONGO_URI=mongodb+srv://varshalala2012_db_user:varsha@cluster0.kl2urj2.mongodb.net/Meet-Hub?appName=Cluster0
 MeetHub is a full-stack event management platform that allows users to create and manage events, register and receive tickets, chat with attendees through a scripted chatbot, and view organizer analytics.
 
 ## Project Structure
