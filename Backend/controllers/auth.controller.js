@@ -10,15 +10,29 @@ const register = async (req, res) => {
       });
     }
 
+    if (password.length < 8) {
+      return res.status(400).json({
+        message: "Password must contain at least 8 characters",
+      });
+    }
+
     console.info("Registration request received:", { name, email });
+    const user = await authService.register(name.trim(), email, password);
 
     res.status(201).json({
-      message: "Registration received (not saved)",
-      user: { name, email },
+      message: "Registration successful",
+      user,
     });
   } catch (error) {
-    res.status(400).json({
-      message: error.message,
+    if (error.code === 11000) {
+      return res.status(409).json({
+        message: "An account with this email already exists",
+      });
+    }
+
+    console.error("Registration failed:", error.message);
+    res.status(500).json({
+      message: "Registration failed",
     });
   }
 };
@@ -44,8 +58,12 @@ const login = async (req, res) => {
       ...result,
     });
   } catch (error) {
-    res.status(401).json({
-      message: error.message,
+    const status = error.code === "JWT_SECRET_MISSING" ? 500 : 401;
+    if (status === 500) {
+      console.error("Login configuration error:", error.message);
+    }
+    res.status(status).json({
+      message: status === 401 ? error.message : "Login is not configured",
     });
   }
 };

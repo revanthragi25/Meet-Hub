@@ -1,10 +1,10 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -14,10 +14,8 @@
     "cors": "^2.8.6",
     "dotenv": "^18.0.9",
     "express": "^5.3.0",
-<<<<<<< HEAD
     "jsonwebtoken": "^9.0.3",
-=======
->>>>>>> a8907d6062d6c2c013e8025f60a99cd55c19863f
+    "mongoose": "^9.11.4",
     "nodemon": "^3.1.14"
   }
 }
