@@ -1,6 +1,6 @@
 # Meet Hub
 
-Meet Hub is a meeting-focused application. The project is currently being set up.
+MeetHub is a full-stack event management platform that allows users to create and manage events, register and receive tickets, chat with attendees through a scripted chatbot, and view organizer analytics.
 
 ## Project Structure
 
@@ -55,3 +55,143 @@ Attendee → Open Chat UI → React Frontend → Socket.IO Client → Socket.IO 
 ## 6. Analytics Dashboard Flow
 
 Organizer → Open Dashboard → React Frontend → Send Analytics Request (REST API) → Express Backend → Authenticate Organizer → Verify Permissions → Query MongoDB Using Aggregation → Calculate Total Events and Registrations per Event → Return Analytics Data → React Dashboard → Display Charts, Tables, and Statistics
+
+
+## Database Architecture
+
+### Entity Relationship Diagram (ERD)
+
+The following diagram represents the proposed database schema for MeetHub.
+
+```mermaid
+erDiagram
+    AUTH_USERS ||--|| PROFILES : has
+    PROFILES ||--o{ USER_ROLES : assigned
+    ROLES ||--o{ USER_ROLES : contains
+    PROFILES ||--o{ EVENTS : organizes
+
+    EVENTS ||--o{ EVENT_CATEGORIES : classified_as
+    CATEGORIES ||--o{ EVENT_CATEGORIES : includes
+    EVENTS ||--o{ EVENT_TAGS : tagged_with
+    TAGS ||--o{ EVENT_TAGS : includes
+
+    PROFILES ||--o{ REGISTRATIONS : makes
+    EVENTS ||--o{ REGISTRATIONS : receives
+    REGISTRATIONS ||--o{ TICKETS : generates
+
+    EVENTS ||--o| CHAT_ROOMS : has
+    CHAT_ROOMS ||--o{ CHAT_MESSAGES : contains
+    PROFILES o|--o{ CHAT_MESSAGES : sends
+
+    AUTH_USERS {
+        uuid id PK
+    }
+
+    PROFILES {
+        uuid id PK, FK
+        string full_name
+        string avatar_url
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    ROLES {
+        smallint id PK
+        string name UK
+        string description
+    }
+
+    USER_ROLES {
+        uuid user_id PK, FK
+        smallint role_id PK, FK
+        timestamp assigned_at
+        uuid assigned_by FK
+    }
+
+    EVENTS {
+        uuid id PK
+        uuid organizer_id FK
+        string title
+        string description
+        string location
+        timestamp starts_at
+        timestamp ends_at
+        int capacity
+        string status
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    CATEGORIES {
+        uuid id PK
+        string name UK
+        string description
+    }
+
+    EVENT_CATEGORIES {
+        uuid event_id PK, FK
+        uuid category_id PK, FK
+    }
+
+    TAGS {
+        uuid id PK
+        string name UK
+    }
+
+    EVENT_TAGS {
+        uuid event_id PK, FK
+        uuid tag_id PK, FK
+    }
+
+    REGISTRATIONS {
+        uuid id PK
+        uuid event_id FK
+        uuid user_id FK
+        int quantity
+        string status
+        timestamp registered_at
+        timestamp updated_at
+    }
+
+    TICKETS {
+        uuid id PK
+        uuid registration_id FK
+        string ticket_number UK
+        string status
+        timestamp issued_at
+        timestamp checked_in_at
+    }
+
+    CHAT_ROOMS {
+        uuid id PK
+        uuid event_id FK, UK
+        timestamp created_at
+    }
+
+    CHAT_MESSAGES {
+        uuid id PK
+        uuid room_id FK
+        uuid sender_id FK
+        string sender_type
+        string content
+        timestamp created_at
+    }
+```
+
+### Tables Overview
+
+| Table | Purpose |
+|---|---|
+| `profiles` | Stores application-specific user details |
+| `roles` | Defines Admin, Organizer, and Attendee roles |
+| `user_roles` | Maps users to roles and records role assignments |
+| `events` | Stores event information, schedules, status, and capacity |
+| `categories` | Stores broad event classifications |
+| `event_categories` | Links events to categories |
+| `tags` | Stores reusable event keywords |
+| `event_tags` | Links events to tags |
+| `registrations` | Records attendee registrations and seat quantities |
+| `tickets` | Stores individual tickets and check-in status |
+| `chat_rooms` | Associates an event with its chat room |
+| `chat_messages` | Stores attendee messages and chatbot responses |
+
