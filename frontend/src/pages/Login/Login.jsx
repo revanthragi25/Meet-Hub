@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Leftcomp from "../../components/Leftcomp/Leftcomp";
 import "./login.css";
+import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
@@ -22,38 +23,61 @@ function Login() {
     setErrors((prev) => ({ ...prev, [name]: "" }));
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
 
-    const newErrors = {};
+async function handleSubmit(e) {
+  e.preventDefault();
 
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Enter a valid email address";
-    }
+  const newErrors = {};
 
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    }
+  if (!formData.email.trim()) {
+    newErrors.email = "Email is required";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    newErrors.email = "Enter a valid email address";
+  }
 
-    setErrors(newErrors);
+  if (!formData.password) {
+    newErrors.password = "Password is required";
+  }
 
-    if (Object.keys(newErrors).length > 0) return;
+  setErrors(newErrors);
 
-    const user = {
-      email: formData.email.trim(),
-      name: formData.email.trim().split("@")[0],
-      role: "user",
-    };
+  if (Object.keys(newErrors).length > 0) return;
+
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/api/auth/login",
+      {
+        email: formData.email.trim(),
+        password: formData.password,
+      }
+    );
+
+    const user = response.data.user;
 
     const storage = rememberMe ? localStorage : sessionStorage;
 
     storage.setItem("meethubDemoUser", JSON.stringify(user));
 
-    navigate("/dashboard");
-  }
+    // Store the token if your backend returns one
+    if (response.data.token) {
+      storage.setItem("token", response.data.token);
+    }
 
+    navigate("/dashboard");
+  } catch (error) {
+    const message =
+      error.response?.data?.message || "Login failed. Please try again.";
+
+    if (error.response?.status === 401) {
+      setErrors((prev) => ({
+        ...prev,
+        password: message,
+      }));
+    } else {
+      alert(message);
+    }
+  }
+}
   return (
     <div className="login-page">
       <Leftcomp />

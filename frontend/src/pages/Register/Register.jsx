@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./register.css";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Leftcomp from "../../components/Leftcomp/Leftcomp";
 
@@ -11,20 +12,39 @@ const [userdetails,setUserdetails] =useState({
     confirmPassword:""
 })
 const [errors,setErrors]=useState({})
-
+const navigate =useNavigate()
 function handleInput(e){
     setUserdetails({...userdetails, [e.target.name] : e.target.value})
 }
 
-function handleSubmit(e){
-    e.preventDefault()
-      const hasErrors = Object.values(errors).some(
-    (error) => error !== ""
-  );
+async function handleSubmit(e){
+  e.preventDefault()
+    try {
+    const response = await axios.post(
+      "http://localhost:8080/api/auth/register",
+      {
+        name: userdetails.name.trim(),
+        email: userdetails.email.trim(),
+        password: userdetails.password,
+      }
+    );
 
-  if (!hasErrors) {
-    console.log("Registration successful!");
-    console.log(userdetails);
+    alert(response.data.message);
+
+    setUserdetails({
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+console.log("done")
+    setErrors({});
+    navigate('/login')
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      "Registration failed. Please try again.";
+
   }
 }
 
